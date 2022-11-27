@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(path="/api/Auth")
 public class AuthController {
-    @PostMapping(path = "/Login")
-  public void Login(){
-
+    @GetMapping(path = "/Login")
+  public String Login(){
+return "Login";
   }
   @PostMapping(path="/Register")
   public void Register(){
