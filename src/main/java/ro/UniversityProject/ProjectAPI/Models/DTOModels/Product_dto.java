@@ -5,13 +5,10 @@ import javax.persistence.*;
 @Entity(name="Products")
 @Table(name="product")
 public class Product_dto {
-    @javax.persistence.Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private long Id;
-    @Column(name="user_id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User_dto user_dto;
     @Column(name="start_price")
     private float StartPrice;
     @Column(name="actual_price")
@@ -23,6 +20,15 @@ public class Product_dto {
     @Column(name="photo_route")
     private String PhotoRoute;
 
-    public Product_dto() {
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User_dto user_dto;
+
+    public User_dto getUser_dto() {
+        return user_dto;
+    }
+
+    public void setUser_dto(User_dto user_dto) {
+        this.user_dto = user_dto;
     }
 }
