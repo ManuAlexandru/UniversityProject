@@ -1,10 +1,10 @@
-package ro.UniversityProject.ProjectAPI.Models.DTOModels;
+package ro.UniversityProject.ProjectAPI.Common.DTOModels;
 
 import javax.persistence.*;
 
-@Entity(name="Products")
-@Table(name="product")
-public class Product_dto {
+@Entity(name="Product")
+@Table(name="Product")
+public class ProductDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
@@ -22,13 +22,13 @@ public class Product_dto {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    private User_dto user_dto;
+    private UserDTO user_DTO;
 
-    public User_dto getUser_dto() {
-        return user_dto;
+    public UserDTO getUser_dto() {
+        return user_DTO;
     }
 
-    public void setUser_dto(User_dto user_dto) {
-        this.user_dto = user_dto;
+    public void setUser_dto(UserDTO user_DTO) {
+        this.user_DTO = user_DTO;
     }
 }

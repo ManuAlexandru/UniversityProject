@@ -1,4 +1,4 @@
-package ro.UniversityProject.ProjectAPI.Models.DTOModels;
+package ro.UniversityProject.ProjectAPI.Common.DTOModels;
 
 import org.hibernate.Hibernate;
 
@@ -7,8 +7,9 @@ import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
-@Entity(name="Roles")
-public class Roles_dto {
+@Entity(name="Role")
+@Table(name="Role")
+public class RolesDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
@@ -17,13 +18,13 @@ public class Roles_dto {
   private String Name;
 
     @ManyToMany(mappedBy = "roles_dtoes")
-    private Set<User_dto> user_dtoes = new LinkedHashSet<>();
+    private Set<UserDTO> user_dtoes = new LinkedHashSet<>();
 
-    public Set<User_dto> getUser_dtoes() {
+    public Set<UserDTO> getUser_dtoes() {
         return user_dtoes;
     }
 
-    public void setUser_dtoes(Set<User_dto> user_dtoes) {
+    public void setUser_dtoes(Set<UserDTO> user_dtoes) {
         this.user_dtoes = user_dtoes;
     }
 
@@ -31,8 +32,8 @@ public class Roles_dto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Roles_dto roles_dto = (Roles_dto) o;
-        return Objects.equals(Id, roles_dto.Id);
+        RolesDTO roles_DTO = (RolesDTO) o;
+        return Objects.equals(Id, roles_DTO.Id);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package ro.UniversityProject.ProjectAPI.Models;
+package ro.UniversityProject.ProjectAPI.DAL.Stores;
 
 public class ProductModel {
     private int Id;

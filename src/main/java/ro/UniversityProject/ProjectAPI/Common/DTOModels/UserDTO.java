@@ -1,38 +1,36 @@
-package ro.UniversityProject.ProjectAPI.Models.DTOModels;
+package ro.UniversityProject.ProjectAPI.Common.DTOModels;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
-@Entity(name="Users")
-@Table(name = "user")
-public class User_dto {
+@Entity(name="People")
+@Table(name = "People")
+public class UserDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private long Id;
     @Column(name="first_name")
-    private String FirstName;
+    public String FirstName;
     @Column(name="last_name")
-    private String LastName;
+    public String LastName;
     @Column(name="email")
-    private String Email;
+    public String Email;
     @Column(name="password")
-    private String Password;
+    public String Password;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Roles_dto> roles_dtoes = new LinkedHashSet<>();
+    private Set<RolesDTO> roles_dtoes = new LinkedHashSet<>();
 
-    public Set<Roles_dto> getRoles_dtoes() {
+    public Set<RolesDTO> getRoles_dtoes() {
         return roles_dtoes;
     }
 
-    public void setRoles_dtoes(Set<Roles_dto> roles_dtoes) {
+    public void setRoles_dtoes(Set<RolesDTO> roles_dtoes) {
         this.roles_dtoes = roles_dtoes;
     }
 
