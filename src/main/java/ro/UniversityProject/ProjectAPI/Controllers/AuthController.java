@@ -2,7 +2,6 @@ package ro.UniversityProject.ProjectAPI.Controllers;
 
 import org.springframework.web.bind.annotation.*;
 import ro.UniversityProject.ProjectAPI.BLL.Abstraction.IAuthService;
-import ro.UniversityProject.ProjectAPI.BLL.UTILS.TokenLogic.JwtTokenUtil;
 import ro.UniversityProject.ProjectAPI.DAL.Stores.UserModel;
 
 @RestController
@@ -11,10 +10,10 @@ import ro.UniversityProject.ProjectAPI.DAL.Stores.UserModel;
 public class AuthController {
 
   IAuthService _authService;
-  JwtTokenUtil _jwtService;
-public AuthController(IAuthService authService,JwtTokenUtil jwtService){
+  //JwtTokenUtil _jwtService;
+public AuthController(IAuthService authService ){
   _authService=authService;
-  _jwtService=jwtService;
+  //_jwtService=jwtService;
 }
     @GetMapping(path = "/Login")
   public String Login(){

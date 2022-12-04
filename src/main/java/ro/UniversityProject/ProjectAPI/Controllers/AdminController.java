@@ -1,10 +1,11 @@
 package ro.UniversityProject.ProjectAPI.Controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ro.UniversityProject.ProjectAPI.BLL.Abstraction.IAdminService;
 import ro.UniversityProject.ProjectAPI.Common.DTOModels.UserDTO;
-import ro.UniversityProject.ProjectAPI.DAL.Abstraction.UserStore;
 
 import java.util.List;
 
@@ -12,17 +13,17 @@ import java.util.List;
 @RequestMapping(path="/api/Admin")
 public class AdminController {
 
-    UserStore _userDtoStore;
-    public AdminController(UserStore userDtoStore){
-        _userDtoStore=userDtoStore;
+IAdminService _adminService;
+    @Autowired
+    public AdminController(IAdminService adminService){
+
+        _adminService=adminService;
     }
 
     @GetMapping(path = "/GetAll")
     public List<UserDTO> Login(){
-        _userDtoStore.GetAll();
+        _adminService.GetUsers();
 
-
-        return  _userDtoStore.GetAll();
-   // return null;
+        return  _adminService.GetUsers();
     }
 }
