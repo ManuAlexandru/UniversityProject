@@ -16,6 +16,7 @@ public class AdminService implements IAdminService {
     }
     @Override
     public List<UserDTO> GetUsers(){
+
         return _userStore.GetAll();
     }
 }

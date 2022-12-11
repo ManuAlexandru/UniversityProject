@@ -1,6 +1,7 @@
 package ro.UniversityProject.ProjectAPI.Common.DTOModels;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity(name="Product")
 @Table(name="Product")
@@ -17,6 +18,8 @@ public class ProductDTO {
     private String Description;
     @Column(name="title")
     private String Title;
+    @Column(name = "start_date")
+    private Timestamp Date;
     @Column(name="photo_route")
     private String PhotoRoute;
 

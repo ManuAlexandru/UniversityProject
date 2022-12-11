@@ -3,8 +3,12 @@ package ro.UniversityProject.ProjectAPI.BLL.Services;
 import org.springframework.stereotype.Service;
 import ro.UniversityProject.ProjectAPI.BLL.Abstraction.IAuthService;
 import ro.UniversityProject.ProjectAPI.BLL.UTILS.Converter;
+import ro.UniversityProject.ProjectAPI.BLL.UTILS.TokenLogic.JwtTokenUtil;
+import ro.UniversityProject.ProjectAPI.BLL.UTILS.TokenLogic.MyUserDetails;
+import ro.UniversityProject.ProjectAPI.BLL.ViewModels.LoginModel;
+import ro.UniversityProject.ProjectAPI.BLL.ViewModels.RegisterModel;
 import ro.UniversityProject.ProjectAPI.DAL.Abstraction.UserStore;
-import ro.UniversityProject.ProjectAPI.DAL.Stores.UserModel;
+
 @Service
 public class AuthService implements IAuthService {
     UserStore _userStore;
@@ -12,11 +16,22 @@ public class AuthService implements IAuthService {
         _userStore = userStore;
     }
 
-    public void Login(UserModel userModel){
+    public String Login(LoginModel user){
+
+
+        var dbUser=_userStore.findByEmail(user.email);
+if(dbUser==null)
+    return "User does not exist";
+if(!dbUser.Password.equals(user.password))
+    return "Wrong password";
+        JwtTokenUtil token =new JwtTokenUtil();
+        MyUserDetails userDetails=new MyUserDetails(dbUser);
+    var generatedToken=token.generateToken(userDetails);
+return generatedToken;
 
     }
 
-    public void Register(UserModel userModel){
+    public void Register(RegisterModel userModel){
 //        var isUser=_user_dtoStore.findByEmail(userModel.Email);
 //if(isUser!=null)
 //    System.out.println("The user already Exist!");

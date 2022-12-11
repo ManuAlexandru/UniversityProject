@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RestController;
 import ro.UniversityProject.ProjectAPI.BLL.Abstraction.IAdminService;
 import ro.UniversityProject.ProjectAPI.Common.DTOModels.UserDTO;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -21,9 +24,17 @@ IAdminService _adminService;
     }
 
     @GetMapping(path = "/GetAll")
-    public List<UserDTO> Login(){
-        _adminService.GetUsers();
+    public List<UserDTO> GetUsers(){
+       // Timestamp time=new Timestamp("");
+
 
         return  _adminService.GetUsers();
+    }
+    @GetMapping(path = "/Date")
+    public String GetDate(){
+        long miliseconds=System.currentTimeMillis();
+        DateFormat obj = new SimpleDateFormat("dd/MM/yyyy");
+        Date result=new Date(miliseconds);
+        return obj.format((result));
     }
 }

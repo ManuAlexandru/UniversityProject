@@ -1,8 +1,12 @@
 package ro.UniversityProject.ProjectAPI.Controllers;
 
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import ro.UniversityProject.ProjectAPI.BLL.Abstraction.IAuthService;
-import ro.UniversityProject.ProjectAPI.DAL.Stores.UserModel;
+import ro.UniversityProject.ProjectAPI.BLL.ViewModels.LoginModel;
+import ro.UniversityProject.ProjectAPI.BLL.ViewModels.RegisterModel;
 
 @RestController
 
@@ -15,12 +19,18 @@ public AuthController(IAuthService authService ){
   _authService=authService;
   //_jwtService=jwtService;
 }
-    @GetMapping(path = "/Login")
-  public String Login(){
-return "Login";
+    @PostMapping (path = "/Login")
+  public String Login(@RequestBody LoginModel user){
+
+var result=_authService.Login(user);
+
+  return result;
+
+
+
   }
   @PostMapping(path="/Register")
-  public void Register(@RequestBody UserModel userModel){
+  public void Register(@RequestBody RegisterModel userModel){
 
     _authService.Register(userModel);
   }

@@ -1,7 +1,6 @@
 package ro.UniversityProject.ProjectAPI.BLL.UTILS.TokenLogic;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ro.UniversityProject.ProjectAPI.Common.DTOModels.UserDTO;
 
@@ -21,7 +20,7 @@ public class MyUserDetails implements UserDetails {
         firstName=user.FirstName;
         lastName=user.LastName;
         password=user.Password;
-        authorities.add(new SimpleGrantedAuthority("ROLE_"+role));
+       // authorities.add(new SimpleGrantedAuthority("ROLE "+role));
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
