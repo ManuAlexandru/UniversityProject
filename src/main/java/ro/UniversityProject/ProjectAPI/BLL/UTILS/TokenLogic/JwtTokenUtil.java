@@ -1,9 +1,6 @@
 package ro.UniversityProject.ProjectAPI.BLL.UTILS.TokenLogic;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Value;
+import io.jsonwebtoken.*;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -20,8 +17,8 @@ public class JwtTokenUtil implements Serializable {
 
     public static final long JWT_TOKEN_VALIDITY = 1500000;
 
-    @Value("${jwt.secret}")
-    private String secret="a key for testing";
+   // static Key secret = MacProvider.generateKey();
+static String secret="javainuse";
 
     //retrieve username from jwt token
     public String getUsernameFromToken(String token) {
@@ -63,12 +60,26 @@ public class JwtTokenUtil implements Serializable {
 
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
-                .signWith(SignatureAlgorithm.HS512, secret).compact();
+                .signWith(SignatureAlgorithm.HS256, secret).compact();
     }
 
     //validate token
-    public Boolean validateToken(String token, UserDetails userDetails) {
-        final String username = getUsernameFromToken(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    public boolean validateJwtToken(String authToken) {
+        try {
+            Jwts.parser().setSigningKey(secret).parseClaimsJws(authToken);
+            return true;
+        } catch (SignatureException e) {
+            System.out.println("Invalid JWT signature: {}"+ e.getMessage());
+        } catch (MalformedJwtException e) {
+            System.out.println("Invalid JWT token: {}"+ e.getMessage());
+        } catch (ExpiredJwtException e) {
+            System.out.println("JWT token is expired: {}"+ e.getMessage());
+        } catch (UnsupportedJwtException e) {
+            System.out.println("JWT token is unsupported: {}"+ e.getMessage());
+        } catch (IllegalArgumentException e) {
+            System.out.println("JWT claims string is empty: {}"+ e.getMessage());
+        }
+
+        return false;
     }
 }
