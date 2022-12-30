@@ -31,14 +31,12 @@ return generatedToken;
 
     }
 
-    public void Register(RegisterModel userModel){
-//        var isUser=_user_dtoStore.findByEmail(userModel.Email);
-//if(isUser!=null)
-//    System.out.println("The user already Exist!");
-//else
-
+    public Boolean Register(RegisterModel userModel){
+        var isUser=_userStore.findByEmail(userModel.email);
+if(isUser!=null)
+    return false;
+else
         _userStore.save(Converter.toUserDTO(userModel));
-
-        System.out.println();
+return true;
     }
 }

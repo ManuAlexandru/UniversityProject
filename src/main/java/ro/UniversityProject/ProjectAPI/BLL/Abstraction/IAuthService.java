@@ -12,5 +12,5 @@ import ro.UniversityProject.ProjectAPI.BLL.ViewModels.RegisterModel;
 public interface IAuthService {
    public String Login(LoginModel user);
 
-   public void Register(RegisterModel userModel);
+   public Boolean Register(RegisterModel userModel);
 }

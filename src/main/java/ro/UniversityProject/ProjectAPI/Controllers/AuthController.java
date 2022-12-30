@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ro.UniversityProject.ProjectAPI.BLL.Abstraction.IAuthService;
 import ro.UniversityProject.ProjectAPI.BLL.ViewModels.LoginModel;
 import ro.UniversityProject.ProjectAPI.BLL.ViewModels.RegisterModel;
+import ro.UniversityProject.ProjectAPI.Common.Models.GenericResponse;
 
 @RestController
 
@@ -20,18 +21,40 @@ public AuthController(IAuthService authService ){
   //_jwtService=jwtService;
 }
     @PostMapping (path = "/Login")
-  public String Login(@RequestBody LoginModel user){
+  public GenericResponse Login(@RequestBody LoginModel user){
 
 var result=_authService.Login(user);
-
-  return result;
-
+      GenericResponse genericResponse=new GenericResponse();
+if(result.compareTo("User does not exist")==0)
+{
+  genericResponse.message="User does not exist";
+  genericResponse.statusCode=500;
+  return genericResponse;
+}
+      if(result.compareTo("Wrong password")==0)
+      {
+        genericResponse.message="Wrong password";
+        genericResponse.statusCode=500;
+        return genericResponse;
+      }
+      genericResponse.message="Auth Succesfully";
+      genericResponse.statusCode=200;
+      genericResponse.token=result;
+      return genericResponse;
 
 
   }
   @PostMapping(path="/Register")
-  public void Register(@RequestBody RegisterModel userModel){
+  public GenericResponse Register(@RequestBody RegisterModel userModel){
+GenericResponse genericResponse=new GenericResponse();
 
-    _authService.Register(userModel);
+    if(!_authService.Register(userModel)){
+      genericResponse.statusCode=500;
+      genericResponse.message="The user already exist";
+      return genericResponse;
+    }
+    genericResponse.statusCode=200;
+    genericResponse.message="The user was saved";
+    return genericResponse;
   }
 }
