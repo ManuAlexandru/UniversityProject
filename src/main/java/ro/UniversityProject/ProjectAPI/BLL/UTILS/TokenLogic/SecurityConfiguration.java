@@ -36,9 +36,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-       http.cors().disable().csrf().disable().authorizeRequests()
-               .antMatchers("/api/Auth/*").permitAll().anyRequest().authenticated().and().exceptionHandling()
-               .authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        http = http.cors().disable().csrf().disable();
+
+        http = http
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and();
+        http=http.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and();
+        http.authorizeRequests().antMatchers("/api/Auth/**").permitAll()
+                .antMatchers("/api/Admin/**").permitAll().anyRequest().authenticated();
+
+//        http.cors().disable().csrf().disable().authorizeRequests()
+//                .antMatchers("/api/Auth/*").permitAll().anyRequest().authenticated().and().exceptionHandling()
+//                .authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
 
        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }

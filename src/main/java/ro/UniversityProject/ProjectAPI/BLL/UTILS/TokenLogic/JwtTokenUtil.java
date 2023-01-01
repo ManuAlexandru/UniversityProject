@@ -1,7 +1,6 @@
 package ro.UniversityProject.ProjectAPI.BLL.UTILS.TokenLogic;
 
 import io.jsonwebtoken.*;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
@@ -32,6 +31,7 @@ static String secret="javainuse";
 
     public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = getAllClaimsFromToken(token);
+
         return claimsResolver.apply(claims);
     }
     //for retrieveing any information from token we will need the secret key
@@ -46,19 +46,26 @@ static String secret="javainuse";
     }
 
     //generate token for user
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(MyUserDetails myUserDetails) {
         Map<String, Object> claims = new HashMap<>();
-        return doGenerateToken(claims, userDetails.getUsername());
+        return doGenerateToken(claims, myUserDetails.getUsername(),myUserDetails.getRole(),myUserDetails.getId());
     }
+    public boolean hasRole(String token, String role) {
+        final Claims claims = getAllClaimsFromToken(token);
+        String roleFromToken=(String) claims.get("Role");
+       if(roleFromToken.equals(role))
+        return true;
 
+     return false;
+    }
     //while creating the token -
     //1. Define  claims of the token, like Issuer, Expiration, Subject, and the ID
     //2. Sign the JWT using the HS512 algorithm and secret key.
     //3. According to JWS Compact Serialization(https://tools.ietf.org/html/draft-ietf-jose-json-web-signature-41#section-3.1)
     //   compaction of the JWT to a URL-safe string
-    private String doGenerateToken(Map<String, Object> claims, String subject) {
+    private String doGenerateToken(Map<String, Object> claims, String subject,String role,long id) {
 
-        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
+        return Jwts.builder().setClaims(claims).setSubject(subject).claim("Role",role).claim("Id",id).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
                 .signWith(SignatureAlgorithm.HS256, secret).compact();
     }

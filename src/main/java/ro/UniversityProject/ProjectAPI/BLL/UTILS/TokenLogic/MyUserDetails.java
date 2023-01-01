@@ -5,27 +5,37 @@ import org.springframework.security.core.userdetails.UserDetails;
 import ro.UniversityProject.ProjectAPI.Common.DTOModels.UserDTO;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class MyUserDetails implements UserDetails {
 
+    public long id;
     private String email;
     private String firstName;
     private String lastName;
     private String password;
-    private List<GrantedAuthority> authorities;
-    private String role="User";
+    private String role;
+
     public MyUserDetails(UserDTO user){
+        id=user.getId();
         email=user.Email;
         firstName=user.FirstName;
         lastName=user.LastName;
         password=user.Password;
-       // authorities.add(new SimpleGrantedAuthority("ROLE "+role));
+role=user.role;
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        Set<GrantedAuthority> authorities = new HashSet<>();
         return authorities;
     }
+public String getRole(){
+        return role;
+}
+public long getId(){
+        return id;
+}
 
     @Override
     public String getPassword() {

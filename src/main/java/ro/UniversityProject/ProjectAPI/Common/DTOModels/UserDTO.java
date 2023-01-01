@@ -1,8 +1,6 @@
 package ro.UniversityProject.ProjectAPI.Common.DTOModels;
 
 import javax.persistence.*;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @Entity(name="People")
 @Table(name = "People")
@@ -11,6 +9,7 @@ public class UserDTO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private long Id;
+
     @Column(name="first_name")
     public String FirstName;
     @Column(name="last_name")
@@ -20,20 +19,12 @@ public class UserDTO {
     @Column(name="password")
     public String Password;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-    @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<RolesDTO> roles_dtoes = new LinkedHashSet<>();
+    @Column(name="Role")
+    public String role="User";
 
-    public Set<RolesDTO> getRoles_dtoes() {
-        return roles_dtoes;
+    public long getId() {
+        return Id;
     }
-
-    public void setRoles_dtoes(Set<RolesDTO> roles_dtoes) {
-        this.roles_dtoes = roles_dtoes;
-    }
-
     @Override
     public String toString() {
         return "User_dto{" +

@@ -16,5 +16,4 @@ public interface UserStore extends JpaRepository<UserDTO, Long> {
     @Query("select u from People u where u.Email=:email")
     UserDTO findByEmail(@Param("email") String email);
 
-
 }
