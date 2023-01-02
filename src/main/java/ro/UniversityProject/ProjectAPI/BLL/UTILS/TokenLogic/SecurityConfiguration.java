@@ -45,11 +45,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and();
         http=http.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and();
         http.authorizeRequests().antMatchers("/api/Auth/**").permitAll()
-                .antMatchers("/api/Admin/**").permitAll().anyRequest().authenticated();
+                .antMatchers("/api/Admin/**").permitAll()
+                .antMatchers("api/Product/**").permitAll().anyRequest().authenticated();
 
-//        http.cors().disable().csrf().disable().authorizeRequests()
-//                .antMatchers("/api/Auth/*").permitAll().anyRequest().authenticated().and().exceptionHandling()
-//                .authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
 
 
        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);

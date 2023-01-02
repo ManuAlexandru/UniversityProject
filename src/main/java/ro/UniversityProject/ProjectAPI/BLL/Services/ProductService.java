@@ -1,13 +1,14 @@
 package ro.UniversityProject.ProjectAPI.BLL.Services;
 
 import org.springframework.stereotype.Service;
+import ro.UniversityProject.ProjectAPI.BLL.Abstraction.IProductService;
 import ro.UniversityProject.ProjectAPI.Common.DTOModels.ProductDTO;
 import ro.UniversityProject.ProjectAPI.DAL.Abstraction.ProductStore;
 
 import java.util.List;
 
 @Service
-public class ProductService {
+public class ProductService implements IProductService {
 
     ProductStore _productStore;
 
