@@ -45,8 +45,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and();
         http=http.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and();
         http.authorizeRequests().antMatchers("/api/Auth/**").permitAll()
-                .antMatchers("/api/Admin/**").permitAll()
-                .antMatchers("api/Product/**").permitAll().anyRequest().authenticated();
+                .antMatchers("/api/Product/**").authenticated()
+                .antMatchers("/api/Admin/**").hasRole("Admin");
 
 
 
