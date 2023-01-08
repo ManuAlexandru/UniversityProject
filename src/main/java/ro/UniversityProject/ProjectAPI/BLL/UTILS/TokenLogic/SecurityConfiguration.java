@@ -37,16 +37,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http = http.cors().disable().csrf().disable();
+        http = http.csrf().disable().cors().and();
 
         http = http
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and();
         http=http.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and();
-        http.authorizeRequests().antMatchers("/api/Auth/**").permitAll()
-                .antMatchers("/api/Product/**").authenticated()
-                .antMatchers("/api/Admin/**").hasRole("Admin");
+//        http.authorizeRequests().antMatchers("/api/Auth/**").permitAll()
+//                .antMatchers("/api/Product/**").and()
+//                .antMatchers("/api/Admin/**").authenticated();
+http.authorizeRequests().antMatchers("/api/Product/**")
+        .authenticated()
+        .antMatchers("/api/Admin/**")
+        .authenticated()
+        .antMatchers("/api/Home/**").permitAll();
 
 
 

@@ -1,4 +1,4 @@
-package ro.UniversityProject.ProjectAPI.Common.ViewModels;
+package ro.UniversityProject.ProjectAPI.BLL.ViewModels;
 
 public class ProductViewModel {
     public String title;
@@ -6,5 +6,7 @@ public class ProductViewModel {
 public float price;
 public long createdDate;
 
-    public String photo;
+public String photo;
+
+public long userId;
 }

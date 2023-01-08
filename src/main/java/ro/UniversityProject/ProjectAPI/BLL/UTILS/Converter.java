@@ -3,7 +3,7 @@ package ro.UniversityProject.ProjectAPI.BLL.UTILS;
 import ro.UniversityProject.ProjectAPI.BLL.ViewModels.RegisterModel;
 import ro.UniversityProject.ProjectAPI.Common.DTOModels.ProductDTO;
 import ro.UniversityProject.ProjectAPI.Common.DTOModels.UserDTO;
-import ro.UniversityProject.ProjectAPI.Common.ViewModels.ProductViewModel;
+import ro.UniversityProject.ProjectAPI.BLL.ViewModels.ProductViewModel;
 
 public  class Converter {
     public static long  weekInMilliseconds=604800000;
@@ -24,6 +24,7 @@ return userDTO;
     productDTO.setActualPrice(productViewModel.price);
     productDTO.setCreatedDate(productViewModel.createdDate);
 productDTO.setEndDate(productViewModel.createdDate+weekInMilliseconds);
+productDTO.setUser_id(productViewModel.userId);
 productDTO.setPhotoRoute("assets\\img\\NoImage.jpg");
     return productDTO;
     }

@@ -11,7 +11,7 @@ import ro.UniversityProject.ProjectAPI.Common.Models.GenericResponse;
 
 @RestController
 
-@RequestMapping(path="/api/Auth")
+@RequestMapping(path="/api/Home/Auth")
 public class AuthController {
 
   IAuthService _authService;

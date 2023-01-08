@@ -2,17 +2,16 @@ package ro.UniversityProject.ProjectAPI.Common.DTOModels;
 
 import javax.persistence.*;
 
-@Entity(name="Product")
-@Table(name="Product")
-public class ProductDTO {
-    @Id
+@Entity(name="BoughtProduct")
+@Table(name="BoughtProduct")
+public class BoughtProductsDTO {
+    @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private long Id;
-    @Column(name="start_price")
-    private float StartPrice;
-    @Column(name="actual_price")
-    private float ActualPrice;
+
+    @Column(name="bought_price")
+    private float BoughtPrice;
     @Column(name="description")
     private String Description;
     @Column(name="title")
@@ -25,33 +24,19 @@ public class ProductDTO {
     private String PhotoRoute;
     @Column(name="user_id")
     private long user_id;
-    public long getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(long user_id) {
-        this.user_id = user_id;
-    }
-
+    @Column(name="buyer")
+    private long buyer_id;
 
     public long getId() {
         return Id;
     }
 
-    public float getStartPrice() {
-        return StartPrice;
+    public float getBoughtPrice() {
+        return BoughtPrice;
     }
 
-    public void setStartPrice(float startPrice) {
-        StartPrice = startPrice;
-    }
-
-    public float getActualPrice() {
-        return ActualPrice;
-    }
-
-    public void setActualPrice(float actualPrice) {
-        ActualPrice = actualPrice;
+    public void setBoughtPrice(float boughtPrice) {
+        BoughtPrice = boughtPrice;
     }
 
     public String getDescription() {
@@ -92,5 +77,21 @@ public class ProductDTO {
 
     public void setPhotoRoute(String photoRoute) {
         PhotoRoute = photoRoute;
+    }
+
+    public long getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(long user_id) {
+        this.user_id = user_id;
+    }
+
+    public long getBuyer_id() {
+        return buyer_id;
+    }
+
+    public void setBuyer_id(long buyer_id) {
+        this.buyer_id = buyer_id;
     }
 }
