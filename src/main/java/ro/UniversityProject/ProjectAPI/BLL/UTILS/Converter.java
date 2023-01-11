@@ -23,7 +23,7 @@ return userDTO;
     productDTO.setStartPrice(productViewModel.price);
     productDTO.setActualPrice(productViewModel.price);
     productDTO.setCreatedDate(productViewModel.createdDate);
-productDTO.setEndDate(productViewModel.createdDate+weekInMilliseconds);
+    productDTO.setEndDate(productViewModel.endDate);
 productDTO.setUser_id(productViewModel.userId);
 productDTO.setPhotoRoute("assets\\img\\NoImage.jpg");
     return productDTO;

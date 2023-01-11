@@ -19,7 +19,8 @@ public interface ProductStore extends JpaRepository<ProductDTO, Long> {
 
     @Query("select u from Product u where u.Id=:id")
     ProductDTO GetProduct(@Param("id") long id);
-@Transactional
+
+    @Transactional
     @Modifying(clearAutomatically = true)
     @Query("update Product u SET u.Title=:title, u.Description=:description where u.Id=:id")
     int updateProduct(@Param("title") String title,@Param("description")String description,@Param("id") long id);
