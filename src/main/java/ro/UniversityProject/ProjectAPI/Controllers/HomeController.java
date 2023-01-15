@@ -18,7 +18,7 @@ public HomeController(IProductService productService){
 }
     @GetMapping(path = "/GetAllProducts")
     public List<ProductDTO> GetProducts(){
-
+_productService.CheckIfProductIsExpired();
 return _productService.GetProducts();
 
     }

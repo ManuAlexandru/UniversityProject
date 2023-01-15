@@ -25,6 +25,18 @@ public class ProductDTO {
     private String PhotoRoute;
     @Column(name="user_id")
     private long user_id;
+
+    @Column(name="buyer")
+    private long buyer_id;
+
+    public long getBuyer_id() {
+        return buyer_id;
+    }
+
+    public void setBuyer_id(long buyer_id) {
+        this.buyer_id = buyer_id;
+    }
+
     public long getUser_id() {
         return user_id;
     }

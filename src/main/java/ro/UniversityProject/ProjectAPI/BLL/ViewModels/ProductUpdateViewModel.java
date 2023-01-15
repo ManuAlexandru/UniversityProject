@@ -14,6 +14,16 @@ public class ProductUpdateViewModel {
 
     private long userId;
 
+    public long buyerId;
+
+    public long getBuyerId() {
+        return buyerId;
+    }
+
+    public void setBuyerId(long buyerId) {
+        this.buyerId = buyerId;
+    }
+
     public long getId() {
         return id;
     }

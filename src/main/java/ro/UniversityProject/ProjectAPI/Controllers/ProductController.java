@@ -9,6 +9,8 @@ import ro.UniversityProject.ProjectAPI.BLL.UTILS.KafkaChat.Constants.KafkaConsta
 import ro.UniversityProject.ProjectAPI.BLL.UTILS.KafkaChat.Model.KafkaModel;
 import ro.UniversityProject.ProjectAPI.BLL.ViewModels.ProductUpdateViewModel;
 import ro.UniversityProject.ProjectAPI.BLL.ViewModels.ProductViewModel;
+import ro.UniversityProject.ProjectAPI.Common.DTOModels.BoughtProductsDTO;
+import ro.UniversityProject.ProjectAPI.Common.DTOModels.ExpiredProductsDTO;
 import ro.UniversityProject.ProjectAPI.Common.DTOModels.ProductDTO;
 import ro.UniversityProject.ProjectAPI.Common.Models.GenericResponse;
 
@@ -51,7 +53,32 @@ System.out.println(id);
 var listOfProduct= _productService.GetProductsByUserId(id);
 
         return _productService.GetProductsByUserId(id);
+    }
 
+    @PostMapping("/BuyProduct")
+public GenericResponse BuyProduct(@RequestBody ProductUpdateViewModel product){
+        GenericResponse genericResponse=new GenericResponse();
+     var result=   _productService.BuyNow(product);
+     if(result){
+         genericResponse.message="Product Bought";
+         genericResponse.statusCode=200;
+         return genericResponse;
+     }
+        genericResponse.message="Something went wrong";
+        genericResponse.statusCode=500;
+        return genericResponse;
+    }
+
+    @GetMapping("/GetAllBoughtProduct/{id}")
+    public List<BoughtProductsDTO> GetAllBoughtProducts(@PathVariable("id") Long id){
+
+    return _productService.GetAllBoughtProductsById(id);
+    }
+
+    @GetMapping("/GetAllExpiredProduct")
+    public List<ExpiredProductsDTO> GetAllExpiredProducts(){
+
+        return _productService.GetAllExpiredProducts();
     }
 
     @DeleteMapping(path = "/DeleteProduct/{id}")
@@ -91,10 +118,10 @@ var listOfProduct= _productService.GetProductsByUserId(id);
 }
 
     @PutMapping(path = "/UpdateProductPrice")
-    public GenericResponse UpdateProductPrice(@RequestBody ProductUpdateViewModel product){
+    public GenericResponse UpdateProductPrice(@RequestBody ProductUpdateViewModel productUpdateViewModel ){
         GenericResponse genericResponse=new GenericResponse();
-        System.out.println(product.getDescription());
-        var result= _productService.UpdatePrice(product.getActualPrice(), product.getId());
+
+        var result= _productService.UpdatePrice(productUpdateViewModel);
         if(result){
             genericResponse.message="Product price Updated";
             genericResponse.statusCode=200;

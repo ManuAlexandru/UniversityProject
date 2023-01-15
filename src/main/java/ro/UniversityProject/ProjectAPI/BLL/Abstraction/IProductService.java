@@ -1,6 +1,8 @@
 package ro.UniversityProject.ProjectAPI.BLL.Abstraction;
 
 import ro.UniversityProject.ProjectAPI.BLL.ViewModels.ProductUpdateViewModel;
+import ro.UniversityProject.ProjectAPI.Common.DTOModels.BoughtProductsDTO;
+import ro.UniversityProject.ProjectAPI.Common.DTOModels.ExpiredProductsDTO;
 import ro.UniversityProject.ProjectAPI.Common.DTOModels.ProductDTO;
 import ro.UniversityProject.ProjectAPI.BLL.ViewModels.ProductViewModel;
 
@@ -16,5 +18,11 @@ public interface IProductService {
 
     ProductDTO GetProduct(long id);
     boolean UpdateProduct(ProductUpdateViewModel product);
-    boolean UpdatePrice(float price, long id);
+    boolean UpdatePrice(ProductUpdateViewModel productUpdateViewModel );
+
+    void CheckIfProductIsExpired();
+    boolean BuyNow(ProductUpdateViewModel productUpdateViewModel);
+
+    List<BoughtProductsDTO> GetAllBoughtProductsById(long id);
+    List<ExpiredProductsDTO> GetAllExpiredProducts();
 }
