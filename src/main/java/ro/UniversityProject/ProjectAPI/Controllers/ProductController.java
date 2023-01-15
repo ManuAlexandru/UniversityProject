@@ -1,10 +1,14 @@
 package ro.UniversityProject.ProjectAPI.Controllers;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 import ro.UniversityProject.ProjectAPI.BLL.Abstraction.IProductService;
-import ro.UniversityProject.ProjectAPI.BLL.ViewModels.ProductViewModel;
+import ro.UniversityProject.ProjectAPI.BLL.UTILS.KafkaChat.Constants.KafkaConstants;
+import ro.UniversityProject.ProjectAPI.BLL.UTILS.KafkaChat.Model.KafkaModel;
 import ro.UniversityProject.ProjectAPI.BLL.ViewModels.ProductUpdateViewModel;
+import ro.UniversityProject.ProjectAPI.BLL.ViewModels.ProductViewModel;
 import ro.UniversityProject.ProjectAPI.Common.DTOModels.ProductDTO;
 import ro.UniversityProject.ProjectAPI.Common.Models.GenericResponse;
 
@@ -15,6 +19,8 @@ import java.util.List;
 public class ProductController {
 
 private IProductService _productService;
+    @Autowired
+    private KafkaTemplate<String, KafkaModel> kafkaTemplate;
 
 public ProductController(IProductService productService){
     _productService=productService;
@@ -30,6 +36,9 @@ var result=_productService.AddProduct(product);
 if(result){
     genericResponse.message="It works";
     genericResponse.statusCode=200;
+    var model=new KafkaModel(product.userId, product.title);
+kafkaTemplate.send(KafkaConstants.KAFKA_TOPIC,model);
+
     return genericResponse;
 }
     genericResponse.message="It is not working";
@@ -95,4 +104,4 @@ var listOfProduct= _productService.GetProductsByUserId(id);
         genericResponse.statusCode=500;
         return genericResponse;
     }
-}
+    }

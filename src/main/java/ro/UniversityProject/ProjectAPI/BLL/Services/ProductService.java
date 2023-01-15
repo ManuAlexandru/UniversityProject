@@ -3,8 +3,8 @@ package ro.UniversityProject.ProjectAPI.BLL.Services;
 import org.springframework.stereotype.Service;
 import ro.UniversityProject.ProjectAPI.BLL.Abstraction.IProductService;
 import ro.UniversityProject.ProjectAPI.BLL.UTILS.Converter;
-import ro.UniversityProject.ProjectAPI.BLL.ViewModels.ProductViewModel;
 import ro.UniversityProject.ProjectAPI.BLL.ViewModels.ProductUpdateViewModel;
+import ro.UniversityProject.ProjectAPI.BLL.ViewModels.ProductViewModel;
 import ro.UniversityProject.ProjectAPI.Common.DTOModels.ProductDTO;
 import ro.UniversityProject.ProjectAPI.DAL.Abstraction.ProductStore;
 
@@ -29,6 +29,7 @@ public class ProductService implements IProductService {
 
 try {
     _productStore.save(Converter.toProductDto(product));
+
     return true;
 }catch(Exception ex){
     return false;
