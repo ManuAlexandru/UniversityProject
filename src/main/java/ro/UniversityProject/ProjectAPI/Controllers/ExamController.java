@@ -1,6 +1,5 @@
 package ro.UniversityProject.ProjectAPI.Controllers;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ro.UniversityProject.ProjectAPI.BLL.Abstraction.ITestService;
 import ro.UniversityProject.ProjectAPI.BLL.ViewModels.BookViewModel;
@@ -9,7 +8,6 @@ import ro.UniversityProject.ProjectAPI.Common.DTOModels.BookDto;
 import ro.UniversityProject.ProjectAPI.Common.DTOModels.WordCounterDto;
 
 import java.util.List;
-import java.util.logging.Filter;
 
 @RestController
 @RequestMapping(path="/api/Exam")
@@ -25,9 +23,9 @@ public class ExamController {
 _service.addBook(bookViewModel);
     }
 
-    @GetMapping(path="/SearchBook")
+    @PostMapping(path="/SearchBook")
     public List<BookDto> GetBookByFilter(@RequestBody FilterBooks filter){
-
+System.out.println(filter.text);
         return _service.getBookByName(filter.text);
     }
 

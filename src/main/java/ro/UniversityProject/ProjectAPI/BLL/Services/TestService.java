@@ -8,6 +8,7 @@ import ro.UniversityProject.ProjectAPI.Common.DTOModels.WordCounterDto;
 import ro.UniversityProject.ProjectAPI.DAL.Abstraction.BookStore;
 import ro.UniversityProject.ProjectAPI.DAL.Abstraction.WordCounterStore;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 public class TestService implements ITestService {
@@ -21,9 +22,9 @@ public class TestService implements ITestService {
 
     public void addBook(BookViewModel bookViewModel){
         BookDto book=new BookDto();
-        book.author=bookViewModel.Author;
-        book.year=bookViewModel.Year;
-        book.name= bookViewModel.Name;
+        book.author=bookViewModel.author;
+        book.year=bookViewModel.year;
+        book.name= bookViewModel.name;
         try {
             _bookStore.save(book);
         }catch (Exception ex){
@@ -37,23 +38,27 @@ public List<BookDto> getAllBooks(){
 
 public List<BookDto> getBookByName(String text){
        var result=_bookStore.GetAll();
-       var listToBeSent=result;//de aici o sa scot cartile ale caror nume nu contine text ul introdus de user
+       List listToBeSent=new ArrayList<BookDto>();
 
-       for(int i=0;i<result.size();i++){
+    int size=result.size();
+
+       for(int i=0;i<size;i++){
            var book=result.get(i);
-           if(!book.name.contains(text))//daca cuv introdus de la user nu e inclus in numele cartii scot cartea
-               listToBeSent.remove(i);
-       }
 
+           if(book.name.contains(text))//daca cuv introdus de la user nu e inclus in numele cartii scot cartea
+           {
+               listToBeSent.add(book);
+           }
+       }
        if(listToBeSent.size()==0)//daca lista e goala introduc in db cuv de la user
        {
            WordCounterDto wordCounterDto=new WordCounterDto();
            wordCounterDto.insertedWord=text;
            _wordCounter.save(wordCounterDto);
-           return null;//momentan intorc null, stiu ca nu i ok dar momentan asta e singura varianta la care m am gandit
+           return listToBeSent;//momentan intorc null, stiu ca nu i ok dar momentan asta e singura varianta la care m am gandit
        }
 
-       return result;
+       return listToBeSent;
 }
 
     public List<WordCounterDto> getAllWords(){
