@@ -25,7 +25,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(myUserDetailsService);
     }
 
-
+//    @Bean
+//    @Override
+//    public AuthenticationManager authenticationManagerBean() throws Exception {
+//        return super.authenticationManagerBean();
+//    }
     @Bean
     public JwtRequestFilter authenticationJwtTokenFilter() {
         return new JwtRequestFilter();
@@ -40,8 +44,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and();
         http=http.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and();
-
-
+//        http.authorizeRequests().antMatchers("/api/Auth/**").permitAll()
+//                .antMatchers("/api/Product/**").and()
+//                .antMatchers("/api/Admin/**").authenticated();
 http.authorizeRequests().antMatchers("/api/Product/**")
         .authenticated()
         .antMatchers("/api/Admin/**")
