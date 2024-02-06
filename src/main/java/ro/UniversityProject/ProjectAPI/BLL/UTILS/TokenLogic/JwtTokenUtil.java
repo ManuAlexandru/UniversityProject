@@ -65,9 +65,13 @@ static String secret="javainuse";
     //   compaction of the JWT to a URL-safe string
     private String doGenerateToken(Map<String, Object> claims, String subject,String role,long id) {
 
-        return Jwts.builder().setClaims(claims).setSubject(subject).claim("Role",role).claim("Id",id).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
-                .signWith(SignatureAlgorithm.HS256, secret).compact();
+        return Jwts.builder().setClaims(claims)
+                             .setSubject(subject)
+                             .claim("Role",role)
+                             .claim("Id",id)
+                             .setIssuedAt(new Date(System.currentTimeMillis()))
+                             .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
+                             .signWith(SignatureAlgorithm.HS256, secret).compact();
     }
 
     //validate token
